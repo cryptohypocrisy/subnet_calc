@@ -96,6 +96,8 @@ def calculate_networks_hosts(mask):
         if 0 <= i < 255:
             significant_index = mask.index(str(i))
             break
+        else:
+            significant_index = 3
 
     if significant_index == 0:
         nh_binary = bin(int(mask[0])).count("1")
@@ -112,25 +114,40 @@ def calculate_networks_hosts(mask):
 
     number_of_networks = int(m.pow(2, nh_binary))
 
+    if int(mask[3]) == 255:
+        number_of_networks = 1
+        number_of_hosts = 1
+
     return number_of_networks, number_of_hosts
 
 
 def get_net_class(ip):
-    return ip
+    if '0' <= ip[0] <= '126':
+        return "A"
+    elif ip[0] == '127':
+        return "A (loopback)"
+    elif '128' <= ip[0] <='191':
+        return "B"
+    elif '192'<= ip[0] <= '223':
+        return "C"
+    elif '224' <= ip[0] <= '239':
+        return "D"
+    else:
+        return "E"
 
 
 def display_subnet_info(ip, mask):
     network = calculate_network_address(ip, mask)
     broadcast = calculate_broadcast_address(ip, mask)
     networks, hosts = calculate_networks_hosts(mask)
-    # net_class = get_net_class(ip)
+    net_class = get_net_class(ip)
 
     fmt = "{:<25} {:>25}"
 
     print()
     print(fmt.format("Network Address:", ".".join(network)))
     print(fmt.format("Broadcast Address:", ".".join(broadcast)))
-    # print(fmt.format("Network Class:", ".".join(net_class)))
+    print(fmt.format("Network Class:", net_class))
     print(fmt.format("Number of Networks:", networks))
     print("{:<25} {:>25,}".format("Number of Usable Hosts:", hosts))
 

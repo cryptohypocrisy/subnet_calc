@@ -7,7 +7,7 @@ import getipinfo as gii
 
 locale = lc.setlocale(lc.LC_ALL, '')  # set locale for formatting
 if locale == "C":
-    lc.setlocale(lc.LC_ALL, 'en_us')  # if Mac OS, set it 'en_us'
+    lc.setlocale(lc.LC_ALL, 'en_us')  # if Mac OS, set to en_us
 
 
 def display_title():
@@ -18,7 +18,7 @@ def calculate_network_address(ip, mask):
     net_address_list = []
 
     for i in range(4):
-        net_address = int(ip[i]) & int(mask[i])
+        net_address = int(ip[i]) & int(mask[i])  # use indices to AND respective quartets
         net_address_list.append(str(net_address))
 
     return net_address_list
@@ -75,7 +75,7 @@ def get_net_class(ip):
         return "A"
     elif ip[0] == '127':
         return "A (loopback)"
-    elif '128' <= ip[0] <='191':
+    elif '128' <= ip[0] <= '191':
         return "B"
     elif '192'<= ip[0] <= '223':
         return "C"
@@ -105,10 +105,10 @@ def display_subnet_info(ip, mask, cidr):
     fmt = "{:<25} {:>25}"
 
     print()
-    print(fmt.format("IP:", ".".join(ip) + "/%s" % cidr,))
+    print(fmt.format("IP:", ".".join(ip)))
     print(fmt.format("Netmask:", ".".join(mask)))
     print(fmt.format("Wildcard:", ".".join(wildcard)))
-    print(fmt.format("Network:", ".".join(network)))
+    print(fmt.format("Network:", ".".join(network) + "/%s" % cidr))
     print(fmt.format("Broadcast:", ".".join(broadcast)))
     print(fmt.format("Class:", net_class))
     print(fmt.format("Number of Networks:", networks))

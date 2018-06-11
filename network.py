@@ -107,7 +107,7 @@ class Network:
             number_of_networks = int(m.pow(2, self.cidr - 24))
 
         if int(self.__mask[3]) == 255:
-            number_of_networks = 0
+            number_of_networks = 1
             number_of_hosts = 1
 
         return number_of_networks, number_of_hosts

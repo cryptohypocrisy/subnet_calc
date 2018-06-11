@@ -102,7 +102,7 @@ class Network:
         elif significant_index == 3:
             number_of_networks = int(m.pow(2, self.__cidr - 24))
             
-        number_of_hosts = m.pow(2, 32 - self.__cidr) - 2
+        number_of_hosts = int(m.pow(2, 32 - self.__cidr) - 2)
 
         if int(self.__mask[3]) == 255:
             number_of_networks = 1

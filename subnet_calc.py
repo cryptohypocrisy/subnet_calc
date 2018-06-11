@@ -39,8 +39,7 @@ def main():
 
     while True:
         # use the 'getipinfo' module to get ip address, mask, and
-        # corresponding cidr notation from user and validate their
-        # input
+        # cidr from user and validate their input
         ip_list = gii.get_ip()
         mask_list, cidr = gii.get_mask()
 

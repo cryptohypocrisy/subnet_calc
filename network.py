@@ -88,10 +88,8 @@ class Network:
                 significant_index = self.__mask.index(str(i))
                 break
             else:
-                # if all octets are 255 this is a host address /32
-                number_of_networks = 0
-                number_of_hosts = 1
-                return number_of_networks, number_of_hosts
+                # if all octets are 255 this will catch it
+                significant_index = 3
 
         # use the cidr value to find number of hosts and number of networks
         # based on which octet is significant
@@ -107,6 +105,10 @@ class Network:
         elif significant_index == 3:
             number_of_hosts = int(m.pow(2, (8 - (self.cidr - 24))) - 2)
             number_of_networks = int(m.pow(2, self.cidr - 24))
+
+        if self.__mask[3] == 255:
+            number_of_networks = 0
+            number_of_hosts = 1
 
         return number_of_networks, number_of_hosts
 

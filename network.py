@@ -94,17 +94,15 @@ class Network:
         # use the cidr value to find number of hosts and number of networks
         # based on which octet is significant
         if significant_index == 0:
-            number_of_hosts = int(m.pow(2, (32 - self.cidr)) - 2)
-            number_of_networks = int(m.pow(2, self.cidr))
+            number_of_networks = int(m.pow(2, self.__cidr))
         elif significant_index == 1:
-            number_of_hosts = int(m.pow(2, (24 - (self.cidr - 8))) - 2)
-            number_of_networks = int(m.pow(2, self.cidr - 8))
+            number_of_networks = int(m.pow(2, self.__cidr - 8))
         elif significant_index == 2:
-            number_of_hosts = int(m.pow(2, (16 - (self.cidr - 16))) - 2)
-            number_of_networks = int(m.pow(2, self.cidr - 16))
+            number_of_networks = int(m.pow(2, self.__cidr - 16))
         elif significant_index == 3:
-            number_of_hosts = int(m.pow(2, (8 - (self.cidr - 24))) - 2)
-            number_of_networks = int(m.pow(2, self.cidr - 24))
+            number_of_networks = int(m.pow(2, self.__cidr - 24))
+            
+        number_of_hosts = m.pow(2, 32 - self.__cidr) - 2
 
         if int(self.__mask[3]) == 255:
             number_of_networks = 1
